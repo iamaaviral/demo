@@ -4,7 +4,11 @@ import './List.css'
 
 type Prop = {
     data: Array<{}>
-    filterTerm: string
+    filterTerm: {
+        gender: string,
+        brand: string,
+        category: string
+    }
 }
 
 const List = (props: Prop) => {
@@ -16,9 +20,9 @@ const List = (props: Prop) => {
                     let gender = eachItem.gender.toUpperCase();
                     let brand = eachItem.brand.toUpperCase();
                     let category = eachItem.category.toUpperCase();
-                    if(gender.includes(props.filterTerm.toUpperCase()) || 
-                       brand.includes(props.filterTerm.toUpperCase()) || 
-                       category.includes(props.filterTerm.toUpperCase())) {
+                    if(gender.includes(props.filterTerm.gender.toUpperCase()) && 
+                       brand.includes(props.filterTerm.brand.toUpperCase()) &&
+                       category.includes(props.filterTerm.category.toUpperCase())) {
                         return <Product item={eachItem} key={i}/>
                     }
                 })

@@ -5,35 +5,59 @@ type Props = {
     changeFilterTerm: Function,
     filterTerm: string,
     data: Array<{
-        gender: string
+        gender: string,
+        brand: string,
+        category: string
     }>
 }
 
 const Filter = (props: Props) => {
-    // let genderOption: any =  [];
-    // genderOption.push(props.data.map(e => e.gender))
-    // console.log(genderOption)
-    // // @ts-ignore: TypeScript only supports iterables on Arrays at the moment.
-    // console.log(genderOption.filter((item, index) => genderOption.indexOf(item) === index))
+    const [genderOps, setGenderOps] = React.useState<any>([])
+    const [brandOps, setBrandOps] = React.useState<any>([])
+    const [productCat, setProductCat] = React.useState<any>([])
+
+    React.useEffect(() => {
+        let genderOption = props.data.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.gender === thing.gender
+            ))
+        )
+
+        let brandOption = props.data.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.brand === thing.brand
+            ))
+        )
+
+        let prodCat = props.data.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.category === thing.category
+            ))
+        )
+        setGenderOps(genderOption)
+        setBrandOps(brandOption)
+        setProductCat(prodCat)
+    }, [props.data])
 
     return (
         <div className="filter-conatiner">
-            <input
-                type="text"
-                className="form-control"
-                placeholder="Search for Category, brand or gender"
-                id="local-filter"
-                value={props.filterTerm}
-                onChange={event => {
-                    event.stopPropagation();
-                    props.changeFilterTerm(event.target.value)
-                }}
-                />
-            <select name="gender" id="gender" onChange={e => props.changeFilterTerm(e.target.value)}>
+            <select name="gender" id="gender" onChange={e => props.changeFilterTerm(e.target.name, e.target.value)}>
+            <option value="">none</option>
+                {genderOps.map((e: any, i:number) => {
+                    return <option value={e.gender} key={i}>{e.gender}</option>
+                })}
+            </select>
+            <select name="brand" id="brand" onChange={e => props.changeFilterTerm(e.target.name, e.target.value)}>
                 <option value="">none</option>
-                <option value="men">Men</option>
-                <option value="women">Women</option>
-                <option value="unisex">unisex</option>
+                {brandOps.map((e: any, i:number) => {
+                    return <option value={e.brand} key={i}>{e.brand}</option>
+                })}
+            </select>
+            <select name="category" id="category" onChange={e => props.changeFilterTerm(e.target.name, e.target.value)}>
+                <option value="">none</option>
+                {productCat.map((e: any, i:number) => {
+                    return <option value={e.category} key={i}>{e.category}</option>
+                })}
             </select>
         </div>
     )

@@ -7,20 +7,24 @@ class ProductContext extends React.Component {
         super(props);
         this.state = {
             data: [],
-            filterTerm: '',
+            filterTerm: {
+                gender: '',
+                brand: '',
+                category: ''
+            },
             getData: () => {
                 fetch('https://demo7242716.mockable.io/products')
                     .then(response => response.json())
                     .then(data => {
-                        // console.log(data)
                         this.setState({
                             data: data.products
                         })
                     })
             },
-            changeFilterTerm: (term: string) => {
+            changeFilterTerm: (name: string, term: string) => {
                 this.setState({
-                    filterTerm: term
+                    //@ts-ignore
+                    filterTerm : {...this.state.filterTerm,  [name]: term }
                 })
             }
         }
