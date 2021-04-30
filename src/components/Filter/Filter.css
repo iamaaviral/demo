@@ -1,0 +1,11 @@
+.filter-conatiner {
+    display: flex;
+    justify-content: center;
+    margin-bottom:  24px;
+}
+
+.filter-conatiner .form-control {
+    width: 80%; 
+    font-size: 14px;
+    outline: 0;
+}

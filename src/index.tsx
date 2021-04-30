@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {ProductContext, Context} from './context'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ProductContext>
+      <Context.Consumer>
+        {(val: any) => <App {...val} />}
+      </Context.Consumer>
+    </ProductContext>
   </React.StrictMode>,
   document.getElementById('root')
 );
